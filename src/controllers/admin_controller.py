@@ -75,14 +75,13 @@ class AdminController:
                 self.admin_view.get_input("Choose which action you want to run")
                 user_input = int(self.admin_view.current_input)
                 if (user_input < 0) or (user_input > len(self.commands)):
-                    raise Exception()
+                    raise
+                res = self.commands[user_input - 1][1]()
+                if res:
+                    return False
             except:
                 print("Invalid action, please try again")
                 user_input = None
-
-            res = self.commands[user_input - 1][1]()
-            if res:
-                return False
             user_input = None
 
     def password_change(self) -> bool:

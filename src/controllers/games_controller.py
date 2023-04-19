@@ -39,16 +39,14 @@ class GamesController:
                 self.admin_view.get_input("Choose which action you want to run")
                 user_input = int(self.admin_view.current_input)
                 if (user_input < 0) or (user_input > len(self.commands)):
-                    raise Exception()
-            except:
-                print("Invalid action, please try again")
-                user_input = None
-            try:
+                    raise
                 res = self.commands[user_input - 1][1]()
                 if res is False:
                     return False
             except:
-                self.admin_view.print_msg("Invalid action, please try again")
+                print("Invalid action, please try again")
+                user_input = None
+            user_input = None
 
     def add_game(self):
         """Method for adding games to database via models using admin inputs from view"""
