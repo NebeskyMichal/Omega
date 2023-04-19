@@ -9,7 +9,8 @@ class TestClientController(unittest.TestCase):
         self.client_controller = ClientController()
 
     def test_login_success(self):
-        self.client_controller.users.find = Mock(return_value=Mock(password='$2b$12$N6yX9hmE2ULVvD1fB/8VZubD6U3F6ofD.iJiW8m9a1lghd7hqAbCK'))
+        self.client_controller.users.find = Mock(
+            return_value=Mock(password='$2b$12$N6yX9hmE2ULVvD1fB/8VZubD6U3F6ofD.iJiW8m9a1lghd7hqAbCK'))
         result = self.client_controller.login("test_user", "test@test.com", "Test1234@")
         self.assertTrue(not result)
 
@@ -28,10 +29,12 @@ class TestClientController(unittest.TestCase):
         result = self.client_controller.register("", "", "", "")
         self.assertEqual(result, "All fields are required")
         result = self.client_controller.register("a", "test@test.com", "Test1234@", "Test1234@")
-        self.assertEqual(result, "Username must be 4-20 characters long and contain only alphanumeric characters and underscores")
+        self.assertEqual(result,
+                         "Username must be 4-20 characters long and contain only alphanumeric characters and underscores")
         result = self.client_controller.register("test_user", "invalid_email", "Test1234@", "Test1234@")
         self.assertEqual(result, "Invalid email address")
         result = self.client_controller.register("test_user", "test@test.com", "password", "password")
-        self.assertEqual(result, "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one digit, and one special character")
+        self.assertEqual(result,
+                         "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one digit, and one special character")
         result = self.client_controller.register("test_user", "test@test.com", "Test1234@", "DifferentPassword1234@")
         self.assertEqual(result, "Passwords do not match")

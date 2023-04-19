@@ -14,15 +14,15 @@ class SearchView:
         self.ASSETS_PATH = Path(r"assets\search\frame0")
         self.window = Tk()
         self.window.geometry("350x100")
-        self.window.configure(bg = "#FFFFFF")
+        self.window.configure(bg="#FFFFFF")
         self.canvas = Canvas(
             self.window,
-            bg = "#FFFFFF",
-            height = 100,
-            width = 350,
-            bd = 0,
-            highlightthickness = 0,
-            relief = "ridge"
+            bg="#FFFFFF",
+            height=100,
+            width=350,
+            bd=0,
+            highlightthickness=0,
+            relief="ridge"
         )
 
         self.canvas.place(x=0, y=0)
@@ -32,7 +32,7 @@ class SearchView:
 
     def generate_components(self):
         self.entry_image_1 = PhotoImage(
-            file=Path(__file__).parent / self.ASSETS_PATH /("entry_1.png"))
+            file=Path(__file__).parent / self.ASSETS_PATH / ("entry_1.png"))
         entry_bg_1 = self.canvas.create_image(
             174.5,
             23.5,
@@ -52,13 +52,13 @@ class SearchView:
         )
 
         self.button_image_1 = PhotoImage(
-            file=Path(__file__).parent / self.ASSETS_PATH /("button_1.png"))
+            file=Path(__file__).parent / self.ASSETS_PATH / ("button_1.png"))
         self.button_1 = Button(
             image=self.button_image_1,
             borderwidth=0,
             highlightthickness=0,
             command=lambda: self.gui.open_user_profile(self, self.searched_term.get("1.0", 'end-1c'),
-                                 self.username, self.email, self.password),
+                                                       self.username, self.email, self.password),
             relief="flat"
         )
         self.button_1.place(
@@ -69,7 +69,7 @@ class SearchView:
         )
 
         self.button_image_2 = PhotoImage(
-            file=Path(__file__).parent / self.ASSETS_PATH /("button_2.png"))
+            file=Path(__file__).parent / self.ASSETS_PATH / ("button_2.png"))
 
         self.button_2 = Button(
             image=self.button_image_2,

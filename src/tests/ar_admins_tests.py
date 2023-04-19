@@ -1,4 +1,5 @@
 import sys
+
 sys.path.append("src/")
 
 from models.database_connector import DatabaseConnectionSingleton as Connection
@@ -16,7 +17,6 @@ class TestActiveRecordAdmins(unittest.TestCase):
         cls.active_record_admins.email = "test_admin@example.com"
         cls.active_record_admins.password = "test_password"
         cls.active_record_admins.save()
-
 
     def test_save(self):
         username = "admin1"
@@ -79,6 +79,7 @@ class TestActiveRecordAdmins(unittest.TestCase):
         result = self.connection.query("select * from Admins where username ='{}' and email ='{}'"
                                        .format(username, email))
         self.assertEqual(len(result), 0)
+
 
 if __name__ == '__main__':
     unittest.main()

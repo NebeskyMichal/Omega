@@ -5,6 +5,7 @@ import re
 
 class ClientController:
     """Controller class for interaction with client interface"""
+
     def __init__(self):
         self.users = ActiveRecordUsers()
 

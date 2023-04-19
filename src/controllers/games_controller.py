@@ -5,6 +5,7 @@ from models.active_record_ratings import ActiveRecordRatings
 
 class GamesController:
     """Controller class for interaction with admin interface about games"""
+
     def __init__(self, admin_view):
         self.admin_view = admin_view
         self.game_model = ActiveRecordGames()

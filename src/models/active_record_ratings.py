@@ -80,33 +80,35 @@ class ActiveRecordRatings:
         self.connection.query(sql)
 
     def find_by_game_title(self, game_title):
-        sql = "select Users.username, Ratings.rating, Ratings.review  from ratings inner join Users on Users.id = ratings.users_id inner join Games on Games.id = ratings.game_id where Games.title = '{}'" \
+        sql = "select Users.username, Ratings.rating, Ratings.review  from ratings " \
+              "inner join Users on Users.id = ratings.users_id " \
+              "inner join Games on Games.id = ratings.game_id where Games.title = '{}'" \
             .format(game_title)
-        result = self.connection.query(sql)
+        result = self.connection.query(sql, False)
         return result
 
     def find_by_user_id(self, user_id):
         sql = "select Ratings.rating, Ratings.review from Ratings where Ratings.users_id = {}".format(user_id)
-        result = self.connection.query(sql)
+        result = self.connection.query(sql, False)
         return result
 
     def find_by_user_username(self, username):
         sql = "select count(users_id) as Count from Ratings inner join Users on Users.id = Ratings.users_id " \
               "where Users.username = '{}'".format(username)
-        result = self.connection.query(sql)
+        result = self.connection.query(sql, False)
         for row in result:
             return row
 
     def get_mean_score(self, username):
         sql = "select AVG(Ratings.rating) as Count from Ratings inner join " \
               "Users on Users.id = Ratings.users_id where Users.username = '{}'".format(username)
-        result = self.connection.query(sql)
+        result = self.connection.query(sql, False)
         for row in result:
             return row
 
     def total(self):
         sql = "select count(*) as Count from Ratings"
-        result = self.connection.query(sql)
+        result = self.connection.query(sql, False)
         for row in result:
             return row
 
@@ -115,5 +117,5 @@ class ActiveRecordRatings:
               "inner join Games on Games.id = Ratings.game_id " \
               "inner join Users on Users.id = Ratings.users_id " \
               "where Users.username = '{}'".format(username)
-        result = self.connection.query(sql)
+        result = self.connection.query(sql, False)
         return result

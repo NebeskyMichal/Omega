@@ -4,7 +4,7 @@ from tkinter import Tk, Canvas, Entry, Text, Button, PhotoImage
 
 class UserProfileView():
 
-    def __init__(self, gui,  searched_username, rating_count, mean_score, reports_given, username, email, password):
+    def __init__(self, gui, searched_username, rating_count, mean_score, reports_given, username, email, password):
         self.gui = gui
 
         self.searched_username = searched_username
@@ -22,12 +22,12 @@ class UserProfileView():
         self.window.configure(bg="#FFFFFF")
         self.canvas = Canvas(
             self.window,
-            bg = "#FFFFFF",
-            height = 450,
-            width = 350,
-            bd = 0,
-            highlightthickness = 0,
-            relief = "ridge"
+            bg="#FFFFFF",
+            height=450,
+            width=350,
+            bd=0,
+            highlightthickness=0,
+            relief="ridge"
         )
 
         self.canvas.place(x=0, y=0)
@@ -46,7 +46,7 @@ class UserProfileView():
         )
 
         self.image_image_1 = PhotoImage(
-            file=Path(__file__).parent / self.ASSETS_PATH /("image_1.png"))
+            file=Path(__file__).parent / self.ASSETS_PATH / ("image_1.png"))
         self.image_1 = self.canvas.create_image(
             175.0,
             143.0,
@@ -92,7 +92,7 @@ class UserProfileView():
             253.0,
             352.0,
             anchor="nw",
-            text=str(round(self.mean_score,2)),
+            text=str(round(self.mean_score, 2)),
             fill="#FFFFFF",
             font=("Inter", 16 * -1)
         )
@@ -125,7 +125,7 @@ class UserProfileView():
         )
 
         self.button_image_1 = PhotoImage(
-            file=Path(__file__).parent / self.ASSETS_PATH /("button_1.png"))
+            file=Path(__file__).parent / self.ASSETS_PATH / ("button_1.png"))
         self.button_1 = Button(
             image=self.button_image_1,
             borderwidth=0,
@@ -141,7 +141,7 @@ class UserProfileView():
         )
 
         self.button_image_2 = PhotoImage(
-            file=Path(__file__).parent / self.ASSETS_PATH /("button_2.png"))
+            file=Path(__file__).parent / self.ASSETS_PATH / ("button_2.png"))
         self.button_2 = Button(
             image=self.button_image_2,
             borderwidth=0,
@@ -157,7 +157,7 @@ class UserProfileView():
         )
 
         self.button_image_3 = PhotoImage(
-            file=Path(__file__).parent / self.ASSETS_PATH /("button_3.png"))
+            file=Path(__file__).parent / self.ASSETS_PATH / ("button_3.png"))
         self.button_3 = Button(
             image=self.button_image_3,
             borderwidth=0,

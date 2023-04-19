@@ -11,6 +11,7 @@ from models.active_record_ratings import ActiveRecordRatings
 from models.active_record_reports import ActiveRecordReports
 from models.active_record_games import ActiveRecordGames
 from models.active_record_users import ActiveRecordUsers
+from models.active_record_bans import ActiveRecordBans
 
 from tkinter import messagebox
 from controllers.client_controller import ClientController
@@ -22,19 +23,25 @@ def alert_window(msg):
 
 class GuiController:
     """Controller class for managing GUI interface"""
+
     def __init__(self):
         self.user_controller = ClientController()
         self.ar_ratings = ActiveRecordRatings()
         self.ar_reports = ActiveRecordReports()
         self.ar_games = ActiveRecordGames()
         self.ar_users = ActiveRecordUsers()
+        self.ar_bans = ActiveRecordBans()
 
-    def move_to_user_menu(self, user_login: str, username: str, email: str, password: str) -> bool:
+    def move_to_user_menu(self, user_login, username: str, email: str, password: str) -> bool:
         if self.user_controller.login(username, email, password):
-            user_login.destroy()
             rating_count = self.ar_ratings.find_by_user_username(username).Count
             mean_score = self.ar_ratings.get_mean_score(username).Count
             reports_given = self.ar_reports.reports_by_username(username).Count
+            ban = self.ar_bans.find_if_banned(username)
+            if ban is not None:
+                alert_window("You have been banned for: " + ban.reason)
+                return False
+            user_login.destroy()
             user_menu = UserMenuView(self, username, email, password, rating_count, mean_score, reports_given)
             return True
         alert_window("Login failed, please try again")
@@ -116,7 +123,7 @@ class GuiController:
                 alert_window("Warning: review is empty")
                 return False
         try:
-            user_id = self.ar_users.find(username,email).id
+            user_id = self.ar_users.find(username, email).id
             game_id = self.ar_games.find_by_title(game_to_review).id
             self.ar_ratings.users_id = int(user_id)
             self.ar_ratings.game_id = int(game_id)
@@ -128,8 +135,3 @@ class GuiController:
         except:
             alert_window("This game does not exist")
             return False
-
-
-
-
-

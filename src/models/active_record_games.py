@@ -96,20 +96,19 @@ class ActiveRecordGames:
 
     def find(self):
         sql = "select * from Games where title='{}' and release_date='{}'".format(self.title, self.release_date)
-        result = self.connection.query(sql)
+        result = self.connection.query(sql, False)
         for row in result:
             return row
 
     def find_all(self):
         sql = "select * from Games"
-        result = self.connection.query(sql)
+        result = self.connection.query(sql, False)
         return result
 
     def get_game_ratings(self):
         sql = "select title, global_rating from Games"
-        result = self.connection.query(sql)
+        result = self.connection.query(sql, False)
         return result
-
 
     def insert_if_not_found(self, publisher):
         res = self.find()
@@ -123,12 +122,12 @@ class ActiveRecordGames:
 
     def total(self):
         sql = "select count(*) as Count from Games"
-        result = self.connection.query(sql)
+        result = self.connection.query(sql, False)
         for row in result:
             return row
 
     def find_by_title(self, title):
         sql = "select * from Games where title = '{}'".format(title)
-        result = self.connection.query(sql)
+        result = self.connection.query(sql, False)
         for row in result:
             return row

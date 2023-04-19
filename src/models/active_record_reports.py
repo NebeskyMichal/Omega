@@ -59,14 +59,14 @@ class ActiveRecordReports:
         sql = "select Reports.id, reporter.username as Reporter, reported.username as Reported, reason from " \
               "Reports inner join Users as reporter on reporter.id = Reports.reporter_id " \
               "inner join Users as reported on reported.id = reports.reported_id"
-        result = self.connection.query(sql)
+        result = self.connection.query(sql, False)
         return result
 
     def find_not_confirmed(self):
         sql = "select Reports.id, reporter.username as Reporter, reported.username as Reported, reason " \
               "from Reports inner join Users as reporter on reporter.id = Reports.reporter_id " \
               "inner join Users as reported on reported.id = reports.reported_id where checked = '0'"
-        result = self.connection.query(sql)
+        result = self.connection.query(sql, False)
         return result
 
     def confirm_report(self, id):
@@ -77,7 +77,6 @@ class ActiveRecordReports:
     def reports_by_username(self, username):
         sql = "select count(reporter_id) as Count from Reports " \
               "inner join Users on Users.id = Reports.reporter_id where Users.username = '{}'".format(username)
-        result = self.connection.query(sql)
+        result = self.connection.query(sql, False)
         for row in result:
             return row
-

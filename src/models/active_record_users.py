@@ -61,19 +61,19 @@ class ActiveRecordUsers:
 
     def find(self, username, email):
         sql = "select * from Users where username ='{}' and email ='{}'".format(username, email)
-        result = self.connection.query(sql)
+        result = self.connection.query(sql, False)
         for row in result:
             return row
 
     def find_all(self):
         sql = "select * from Users"
-        result = self.connection.query(sql)
+        result = self.connection.query(sql, False)
         return result
 
     def find_all_not_banned(self):
         sql = "SELECT Users.id, Users.username, Users.email, Users.password FROM Users " \
               "LEFT JOIN Bans ON Users.id = Bans.users_id WHERE Bans.id IS NULL"
-        result = self.connection.query(sql)
+        result = self.connection.query(sql, False)
         return result
 
     def delete(self, username, email):
@@ -91,6 +91,6 @@ class ActiveRecordUsers:
 
     def total(self):
         sql = "select count(*) as Count from Users"
-        result = self.connection.query(sql)
+        result = self.connection.query(sql, False)
         for row in result:
             return row

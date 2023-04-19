@@ -59,11 +59,18 @@ class ActiveRecordBans:
         sql = "select Admins.username as Admin, Users.username as Client, Bans.release_date as Issued_on, Bans.reason " \
               "as Reason from Bans inner join Users on Users.id = Bans.users_id " \
               "inner join Admins on Bans.admins_id = Admins.id"
-        result = self.connection.query(sql)
+        result = self.connection.query(sql, False)
         return result
 
     def total(self):
         sql = "select count(*) as Count from Bans"
+        result = self.connection.query(sql, False)
+        for row in result:
+            return row
+
+    def find_if_banned(self, username):
+        sql = "select Bans.reason from Bans inner join " \
+              "Users on Users.id = Bans.users_id where Users.username='{}'".format(username)
         result = self.connection.query(sql)
         for row in result:
             return row

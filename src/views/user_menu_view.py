@@ -4,7 +4,7 @@ from tkinter import Tk, Canvas, Entry, Text, Button, PhotoImage
 
 class UserMenuView:
 
-    def __init__(self, gui,  username, email, password, rating_count, mean_score, reports_given):
+    def __init__(self, gui, username, email, password, rating_count, mean_score, reports_given):
         self.gui = gui
 
         self.username = username
@@ -50,7 +50,7 @@ class UserMenuView:
             outline="")
 
         self.button_image_1 = PhotoImage(
-            file=Path(__file__).parent / self.ASSETS_PATH /("button_1.png"))
+            file=Path(__file__).parent / self.ASSETS_PATH / ("button_1.png"))
         self.button_1 = Button(
             image=self.button_image_1,
             borderwidth=0,
@@ -66,7 +66,7 @@ class UserMenuView:
         )
 
         self.button_image_2 = PhotoImage(
-            file=Path(__file__).parent / self.ASSETS_PATH /("button_2.png"))
+            file=Path(__file__).parent / self.ASSETS_PATH / ("button_2.png"))
         self.button_2 = Button(
             image=self.button_image_2,
             borderwidth=0,
@@ -80,9 +80,9 @@ class UserMenuView:
             width=230.0,
             height=35.0
         )
-        #Availabile games
+        # Availabile games
         self.button_image_3 = PhotoImage(
-            file=Path(__file__).parent / self.ASSETS_PATH /("button_3.png"))
+            file=Path(__file__).parent / self.ASSETS_PATH / ("button_3.png"))
         self.button_3 = Button(
             image=self.button_image_3,
             borderwidth=0,
@@ -98,7 +98,7 @@ class UserMenuView:
         )
 
         self.button_image_4 = PhotoImage(
-            file=Path(__file__).parent / self.ASSETS_PATH /("button_4.png"))
+            file=Path(__file__).parent / self.ASSETS_PATH / ("button_4.png"))
         self.button_4 = Button(
             image=self.button_image_4,
             borderwidth=0,
@@ -114,7 +114,7 @@ class UserMenuView:
         )
 
         self.button_image_5 = PhotoImage(
-            file=Path(__file__).parent / self.ASSETS_PATH /("button_5.png"))
+            file=Path(__file__).parent / self.ASSETS_PATH / ("button_5.png"))
         self.button_5 = Button(
             image=self.button_image_5,
             borderwidth=0,
@@ -164,7 +164,7 @@ class UserMenuView:
         )
 
         self.image_image_1 = PhotoImage(
-            file=Path(__file__).parent / self.ASSETS_PATH /("image_1.png"))
+            file=Path(__file__).parent / self.ASSETS_PATH / ("image_1.png"))
         self.image_1 = self.canvas.create_image(
             175.0,
             153.0,
@@ -210,7 +210,7 @@ class UserMenuView:
             253.0,
             352.0,
             anchor="nw",
-            text=str(round(self.mean_score,2)),
+            text=str(round(self.mean_score, 2)),
             fill="#FFFFFF",
             font=("Inter", 16 * -1)
         )

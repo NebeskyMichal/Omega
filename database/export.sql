@@ -208,7 +208,7 @@ PRIMARY KEY CLUSTERED
 GO
 SET IDENTITY_INSERT [dbo].[Admins] ON 
 GO
-INSERT [dbo].[Admins] ([id], [username], [email], [password]) VALUES (1, N'admin', N'admin@example.com', N'$2a$12$yoC..MPY0F9DfdNYfUZ4M.5ki0vWvdl6m5Sfpa/E.8VNM6fVFmtyS')
+INSERT [dbo].[Admins] ([id], [username], [email], [password]) VALUES (1, N'admin', N'admin@example.com', N'$2a$12$vbClpZYWUbUOFHYzSqnHX.nXUptVuzNy39GOXPf5OW43gWxOirz3S')
 GO
 INSERT [dbo].[Admins] ([id], [username], [email], [password]) VALUES (2, N'test_admin2', N'test_admin2@example.com', N'new_password')
 GO

@@ -9,6 +9,7 @@ from models.active_record_ratings import ActiveRecordRatings
 
 class UsersController:
     """Controller class for interaction with admin interface about users"""
+
     def __init__(self, admin_view, admin_controller):
         self.ar_users = ActiveRecordUsers()
         self.ar_admins = ActiveRecordAdmins()

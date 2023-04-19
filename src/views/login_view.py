@@ -157,7 +157,7 @@ class LoginView:
         )
 
         self.button_image_1 = PhotoImage(
-            file=Path(__file__).parent / self.ASSETS_PATH /("button_1.png"))
+            file=Path(__file__).parent / self.ASSETS_PATH / ("button_1.png"))
         self.button_1 = Button(
             image=self.button_image_1,
             borderwidth=0,

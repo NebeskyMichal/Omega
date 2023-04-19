@@ -1,9 +1,11 @@
+import re
+
 import pyodbc
 import configparser
 
 
 class DatabaseConnectionSingleton:
-    """Třída reprezentující připojení do DB pomocí návrhového vzoru Singleton """
+    """Class for database connection using singleton design pattern"""
     __instance = None
 
     @staticmethod
@@ -14,35 +16,54 @@ class DatabaseConnectionSingleton:
 
     def __init__(self):
         if DatabaseConnectionSingleton.__instance is not None:
-            raise Exception("This class is a singleton!")
+            raise Exception("This class is a singleton")
         else:
             DatabaseConnectionSingleton.__instance = self
+
         try:
             config = configparser.ConfigParser()
-            config.read('../cfg/db_config.ini')
-            config.sections()
+            if not config.read('../cfg/db_config.ini'):
+                raise ValueError('Configuration file not found')
+
+            if not config.has_section('Database') or not config.has_option('Database',
+                                                                           'Server') or not config.has_option(
+                    'Database', 'Database') or not config.has_option('Database', 'UID') or not config.has_option(
+                    'Database', 'PWD') or not config.has_option('Database', 'Driver'):
+                raise ValueError('Invalid configuration file')
+
             db_cfg = config['Database']
 
-            self.server = db_cfg['Server']
-            self.database = db_cfg['Database']
-            self.uid = db_cfg['UID']
-            self.pwd = db_cfg['PWD']
-            self.driver = db_cfg['Driver']
+            server = db_cfg.get('Server')
+            database = db_cfg.get('Database')
+            uid = db_cfg.get('UID')
+            pwd = db_cfg.get('PWD')
+            driver = db_cfg.get('Driver')
+
+            if not server or not database or not uid or not pwd or not driver:
+                raise ValueError('Invalid values in the configuration file')
+
+            self.server = server
+            self.database = database
+            self.uid = uid
+            self.pwd = pwd
+            self.driver = driver
+
             self.connection = pyodbc.connect('DRIVER=' + self.driver +
                                              ';SERVER=' + self.server +
                                              ';DATABASE=' + self.database +
                                              ';UID=' + self.uid +
                                              ';PWD=' + self.pwd)
-        except Exception:
-            print("Cant connect to database")
+        except Exception as e:
+            print("Can't connect to database:", e)
+            exit()
 
-    def query(self, sql_query, transactional=False):
-        """Metoda pro spouštění příkazů SQL, rozhoduje se o použití transakcí
+    def query(self, sql_query, transactional=True):
+        """Method for executing sql queries, with transactional support
 
-            :param sql_query: SQL příkaz
-            :param transactional: True/False - rozhoduje o použití transakce
+            :param sql_query: sql query
+            :param transactional: True/False - decision of transactional use
 
-            :return: Výsledek ze Selectu nebo False pokud se nepovede
+            :return: Select result or bool if successful or unsuccessful
         """
         cursor = self.connection.cursor()
         sql_query = sql_query[:6].lower() + sql_query[6:]

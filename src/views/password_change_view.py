@@ -16,12 +16,12 @@ class PasswordChangeView:
         self.window.configure(bg="#384195")
         self.canvas = Canvas(
             self.window,
-            bg = "#384195",
-            height = 450,
-            width = 350,
-            bd = 0,
-            highlightthickness = 0,
-            relief = "ridge"
+            bg="#384195",
+            height=450,
+            width=350,
+            bd=0,
+            highlightthickness=0,
+            relief="ridge"
         )
         self.canvas.place(x=0, y=0)
         self.generate_components()
@@ -30,7 +30,7 @@ class PasswordChangeView:
 
     def generate_components(self):
         self.entry_image_1 = PhotoImage(
-            file=Path(__file__).parent / self.ASSETS_PATH /("entry_1.png"))
+            file=Path(__file__).parent / self.ASSETS_PATH / ("entry_1.png"))
         entry_bg_1 = self.canvas.create_image(
             174.5,
             116.5,
@@ -50,7 +50,7 @@ class PasswordChangeView:
         )
 
         self.entry_image_2 = PhotoImage(
-            file=Path(__file__).parent / self.ASSETS_PATH /("entry_2.png"))
+            file=Path(__file__).parent / self.ASSETS_PATH / ("entry_2.png"))
         entry_bg_2 = self.canvas.create_image(
             174.5,
             184.5,
@@ -70,7 +70,7 @@ class PasswordChangeView:
         )
 
         self.entry_image_3 = PhotoImage(
-            file=Path(__file__).parent / self.ASSETS_PATH /("entry_3.png"))
+            file=Path(__file__).parent / self.ASSETS_PATH / ("entry_3.png"))
         self.entry_bg_3 = self.canvas.create_image(
             174.5,
             252.5,
@@ -126,7 +126,7 @@ class PasswordChangeView:
         )
 
         self.button_image_1 = PhotoImage(
-            file=Path(__file__).parent / self.ASSETS_PATH /("button_1.png"))
+            file=Path(__file__).parent / self.ASSETS_PATH / ("button_1.png"))
         self.button_1 = Button(
             image=self.button_image_1,
             borderwidth=0,
@@ -145,7 +145,7 @@ class PasswordChangeView:
         )
 
         self.button_image_2 = PhotoImage(
-            file=Path(__file__).parent / self.ASSETS_PATH /("button_2.png"))
+            file=Path(__file__).parent / self.ASSETS_PATH / ("button_2.png"))
         self.button_2 = Button(
             image=self.button_image_2,
             borderwidth=0,

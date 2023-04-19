@@ -58,7 +58,7 @@ class ActiveRecordAdmins:
 
     def find(self, username, email):
         sql = "select * from Admins where username ='{}' and email ='{}'".format(username, email)
-        result = self.connection.query(sql)
+        result = self.connection.query(sql, False)
         if len(result) == 0:
             raise AdminNotFoundError(f"No admin user found with username or email '{username}'")
         for row in result:
@@ -66,7 +66,7 @@ class ActiveRecordAdmins:
 
     def find_id_by_username(self):
         sql = "select * from Admins where username = '{}'".format(self.username)
-        result = self.connection.query(sql)
+        result = self.connection.query(sql, False)
         for row in result:
             return row.id
 

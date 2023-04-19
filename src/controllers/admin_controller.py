@@ -10,6 +10,7 @@ import bcrypt
 
 class AdminController:
     """Controller class for interaction with admin interface"""
+
     def __init__(self):
         self.admins = ActiveRecordAdmins()
         self.admin_view = AdminView(50)

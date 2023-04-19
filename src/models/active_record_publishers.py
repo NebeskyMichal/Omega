@@ -33,13 +33,13 @@ class ActiveRecordPublishers:
 
     def find(self):
         sql = "select * from Publishers where name = '{}'".format(self.name)
-        result = self.connection.query(sql)
+        result = self.connection.query(sql, False)
         for row in result:
             return row
 
     def find_by_id(self, id):
         sql = "select * from Publishers where id = {}".format(id)
-        result = self.connection.query(sql)
+        result = self.connection.query(sql, False)
         for row in result:
             return row
 
