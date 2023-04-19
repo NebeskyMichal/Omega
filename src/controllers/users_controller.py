@@ -8,7 +8,7 @@ from models.active_record_ratings import ActiveRecordRatings
 
 
 class UsersController:
-
+    """Controller class for interaction with admin interface about users"""
     def __init__(self, admin_view, admin_controller):
         self.ar_users = ActiveRecordUsers()
         self.ar_admins = ActiveRecordAdmins()
@@ -24,7 +24,13 @@ class UsersController:
                          ("Return to main menu", self.return_to_main_menu)
                          ]
 
-    def user_management(self):
+    def user_management(self) -> bool:
+        """This method loops through menu and is waiting for input from admin,
+                    based on choice it sends admin to another method
+                    or back to main menu using Command Pattern
+
+                    :return: True or False based on if the choice in menu is Exit or not
+        """
         user_input = None
         while user_input not in range(len(self.commands) + 1):
             num = 0
@@ -49,6 +55,7 @@ class UsersController:
                 self.admin_view.print_msg("Invalid action, please try again")
 
     def ban_user(self):
+        """Method for banning users in database via models using admin inputs from view"""
         banning = True
         while banning:
             try:
@@ -83,6 +90,7 @@ class UsersController:
                 self.admin_view.print_msg("Error choosing user")
 
     def view_reports(self):
+        """Method for selecting and viewing reports in database via models using admin inputs from view"""
         reporting = True
         while reporting:
             try:
@@ -108,6 +116,7 @@ class UsersController:
                 self.admin_view.print_msg("Error choosing report")
 
     def user_stats(self):
+        """This method asks Models for data and returns them to view to print them"""
         users = self.ar_users.find_all_not_banned()
         self.admin_view.print_users(users)
         self.admin_view.get_input("Please select a user to check reviews of")
@@ -116,5 +125,9 @@ class UsersController:
         self.admin_view.print_game_reviews_for_user(user.username, reviews)
 
     def return_to_main_menu(self):
+        """This method returns client back to main menu
+
+                   :return: False for returning to main menu
+               """
         self.admin_view.print_msg("Returning to main menu...")
         return False

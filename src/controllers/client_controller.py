@@ -4,11 +4,19 @@ import re
 
 
 class ClientController:
-
+    """Controller class for interaction with client interface"""
     def __init__(self):
         self.users = ActiveRecordUsers()
 
-    def login(self, username, email, password):
+    def login(self, username: str, email: str, password: str) -> bool:
+        """This method checks inputs against database and based on correctness logins users or not
+
+            :param username: client username
+            :param email: client email
+            :param password: client password
+
+            :return: True or false if login was successful
+        """
         try:
             hashed_passwd = self.users.find(username, email).password
         except AttributeError:
@@ -18,7 +26,18 @@ class ClientController:
         else:
             return False
 
-    def password_change(self, username, email, current_password, pass1, pass2):
+    def password_change(self, username: str, email: str, current_password: str, pass1: str, pass2: str) -> bool:
+        """This method asks client for old password and two times new password
+                    checks for correctness of inputs and if the new passwords are same
+
+                    :param username: client username
+                    :param email: client email
+                    :param current_password: client old password
+                    :param pass1: client new password
+                    :param pass2: client new password again
+
+                    :return: True or False if the password was change or not
+                """
         db_hashed_password = self.users.find(username, email).password
         provided_password = current_password.encode("UTF-8")
         if bcrypt.checkpw(provided_password, db_hashed_password.encode("UTF-8")):
@@ -33,7 +52,16 @@ class ClientController:
                 return True
         return False
 
-    def register(self, username, email, password, password_check):
+    def register(self, username: str, email: str, password: str, password_check: str) -> str:
+        """Method for registering client based on theirs inputted credentials
+
+            :param username: client username
+            :param email: client email
+            :param password: client password
+            :param password_check: client password again
+
+            :return: True or String message based on if inputs satisfy validation checks
+        """
         if not username or not email or not password or not password_check:
             return "All fields are required"
         if not re.match(r'^\w{4,20}$', username):

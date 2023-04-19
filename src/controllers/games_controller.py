@@ -4,7 +4,7 @@ from models.active_record_ratings import ActiveRecordRatings
 
 
 class GamesController:
-
+    """Controller class for interaction with admin interface about games"""
     def __init__(self, admin_view):
         self.admin_view = admin_view
         self.game_model = ActiveRecordGames()
@@ -19,7 +19,13 @@ class GamesController:
                          ("Return to main menu", self.return_to_main_menu)
                          ]
 
-    def game_menu(self):
+    def game_menu(self) -> bool:
+        """This method loops through menu and is waiting for input from admin,
+            based on choice it sends admin to another method
+            or back to main menu using Command Pattern
+
+            :return: True or False based on if the choice in menu is Exit or not
+        """
         user_input = None
         while user_input not in range(len(self.commands) + 1):
             num = 0
@@ -44,6 +50,7 @@ class GamesController:
                 self.admin_view.print_msg("Invalid action, please try again")
 
     def add_game(self):
+        """Method for adding games to database via models using admin inputs from view"""
         adding = True
         while adding:
             publisher, title, release_date = self.admin_view.game_inputs(True, True, True)
@@ -64,6 +71,7 @@ class GamesController:
                 self.admin_view.print_msg("There was an error adding game")
 
     def edit_game_title(self):
+        """Method for editing games in database via models using admin inputs from view"""
         editing = True
         while editing:
             result = self.game_model.find_all()
@@ -94,6 +102,7 @@ class GamesController:
                 self.admin_view.print_msg("Error while choosing game")
 
     def edit_game_date(self):
+        """Method for editing games in database via models using admin inputs from view"""
         editing = True
         while editing:
             result = self.game_model.find_all()
@@ -124,6 +133,7 @@ class GamesController:
                 self.admin_view.print_msg("Error while choosing game")
 
     def delete_game(self):
+        """Method for deleting games in database via models using admin inputs from view"""
         deleting = True
         while deleting:
             result = self.game_model.find_all()
@@ -153,6 +163,7 @@ class GamesController:
                 self.admin_view.print_msg("Error while choosing game")
 
     def stats_for_game(self):
+        """Method for getting games statistics from database via models using admin inputs from view"""
         stats = True
         while stats:
             result = self.game_model.find_all()
@@ -178,6 +189,7 @@ class GamesController:
                 self.admin_view.print_msg("Error while choosing game")
 
     def add_publisher(self):
+        """Method for adding publisher to database via models using admin inputs from view"""
         adding = True
         while adding:
             publisher, title, release_date = self.admin_view.game_inputs(True, False, False)
@@ -196,5 +208,9 @@ class GamesController:
                 self.admin_view.print_msg("There was an error adding publisher")
 
     def return_to_main_menu(self):
+        """This method returns client back to main menu
+
+                    :return: False for returning to main menu
+                """
         self.admin_view.print_msg("Returning to main menu...")
         return False

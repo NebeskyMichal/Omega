@@ -9,7 +9,7 @@ import bcrypt
 
 
 class AdminController:
-
+    """Controller class for interaction with admin interface"""
     def __init__(self):
         self.admins = ActiveRecordAdmins()
         self.admin_view = AdminView(50)
@@ -25,7 +25,12 @@ class AdminController:
         self.email = None
         self.menu_loop()
 
-    def login(self, max_attempts=3):
+    def login(self, max_attempts: int = 3) -> bool:
+        """This method asks for credentials and gives 3 attempts to login for admin
+
+            :param max_attempts: number of attempts
+            :return: True or False based on if login was successful or not
+        """
         for attempt in reversed(range(1, max_attempts + 1)):
             self.admin_view.print_msg(f"Please login, you have {attempt} attempts")
             self.admin_view.get_username()
@@ -49,7 +54,12 @@ class AdminController:
         self.admin_view.print_msg("Failed to login")
         return False
 
-    def menu_loop(self):
+    def menu_loop(self) -> bool:
+        """This method loops through menu and is waiting for input from admin,
+            based on choice it sends admin to another method using Command Pattern
+
+            :return: True or False based on if the choice in menu is Exit or not
+        """
         if not self.login():
             return False
         self.admin_view.print_barrier()
@@ -74,7 +84,12 @@ class AdminController:
                 return False
             user_input = None
 
-    def password_change(self):
+    def password_change(self) -> bool:
+        """This method asks admin for old password and two times new password
+            checks for correctness of inputs and if the new passwords are same
+
+            :return: True or False if the password was change or not
+        """
         self.admin_view.get_input("Please enter your password again")
         pswd = self.admin_view.current_input
         db_hashed_password = self.admins.find(self.username, self.email).password
@@ -90,16 +105,21 @@ class AdminController:
                 self.admins.password = pswd[2:len(pswd) - 1]
                 self.admins.update_password()
                 return
-            self.admin_view.print_msg("Password didnt match, please try again")
+            self.admin_view.print_msg("Password didn't match, please try again")
             return False
 
     def database_statistics(self):
+        """This method asks Models for data and returns them to view to print them"""
         users_total = self.users_controller.ar_users.total().Count
         bans_total = self.users_controller.ar_bans.total().Count
         reviews_total = self.users_controller.ar_rating.total().Count
         games_total = self.game_controller.game_model.total().Count
         self.admin_view.print_server_statistics(users_total, bans_total, reviews_total, games_total)
 
-    def end_program(self):
+    def end_program(self) -> bool:
+        """This method gives farewell to user and ends program
+
+            :return: True for ending the program
+        """
         self.admin_view.print_msg("Goodbye!")
         return True
