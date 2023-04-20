@@ -193,4 +193,4 @@ VALUES
 (3, 1, '1', 'Hate speech'),
 (2, 1, '0', 'Fake news');
 
-select * from Admins where username ='admin' and email ='admin@example.com'
+INSERT [Admins] ([username], [email], [password]) VALUES (N'admin', N'admin@example.com', N'$2a$12$vbClpZYWUbUOFHYzSqnHX.nXUptVuzNy39GOXPf5OW43gWxOirz3S')

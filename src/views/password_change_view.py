@@ -8,7 +8,6 @@ class PasswordChangeView:
         self.username = username
         self.password = password
         self.email = email
-        print(self.email)
         self.gui = gui
         self.ASSETS_PATH = Path(r"assets\password_change\frame0")
         self.window = Tk()

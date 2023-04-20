@@ -105,9 +105,6 @@ class GuiController:
         GameUserListView(data)
 
     def send_review(self, username: str, email: str, game_to_review: str, rating: float, review: str):
-        print(game_to_review)
-        print(rating)
-        print(review)
         try:
             rating = float(rating)
             if rating < 1 or rating > 10:

@@ -62,6 +62,8 @@ class ActiveRecordUsers:
     def find(self, username, email):
         sql = "select * from Users where username ='{}' and email ='{}'".format(username, email)
         result = self.connection.query(sql, False)
+        if type(result) is bool:
+            return None
         for row in result:
             return row
 
