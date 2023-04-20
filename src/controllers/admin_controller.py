@@ -33,25 +33,34 @@ class AdminController:
             :return: True or False based on if login was successful or not
         """
         for attempt in reversed(range(1, max_attempts + 1)):
+
             self.admin_view.print_msg(f"Please login, you have {attempt} attempts")
             self.admin_view.get_username()
             self.admin_view.get_email()
             self.admin_view.get_password()
+
             try:
+
                 db_hashed_password = self.admins.find(self.admin_view.username, self.admin_view.email).password
                 provided_password = self.admin_view.password.encode("UTF-8")
+
                 if bcrypt.checkpw(provided_password, db_hashed_password.encode("UTF-8")):
+
                     self.admin_view.print_msg("Successfully logged in")
                     self.username = self.admin_view.username
                     self.email = self.admin_view.email
                     self.users_controller = UsersController(self.admin_view, self.username)
                     return True
+
                 else:
                     self.admin_view.print_msg("Incorrect password")
+
             except AdminNotFoundError:
                 self.admin_view.print_msg("Admin not found")
+
             except Exception as e:
                 self.admin_view.print_msg(f"Error: {str(e)}")
+
         self.admin_view.print_msg("Failed to login")
         return False
 
@@ -63,25 +72,33 @@ class AdminController:
         """
         if not self.login():
             return False
+
         self.admin_view.print_barrier()
         user_input = None
+
         while user_input not in range(len(self.commands) + 1):
+
             num = 0
             for header, method in self.commands:
                 num += 1
                 print(str(num) + ". " + header)
             self.admin_view.print_barrier()
+
             try:
+
                 self.admin_view.get_input("Choose which action you want to run")
                 user_input = int(self.admin_view.current_input)
                 if (user_input < 0) or (user_input > len(self.commands)):
                     raise
+
                 res = self.commands[user_input - 1][1]()
                 if res:
                     return False
+
             except:
                 print("Invalid action, please try again")
                 user_input = None
+
             user_input = None
 
     def password_change(self) -> bool:
@@ -94,17 +111,22 @@ class AdminController:
         pswd = self.admin_view.current_input
         db_hashed_password = self.admins.find(self.username, self.email).password
         provided_password = pswd.encode("UTF-8")
+
         if bcrypt.checkpw(provided_password, db_hashed_password.encode("UTF-8")):
+
             self.admin_view.get_input("Please enter your new password")
             pass1 = self.admin_view.current_input
             self.admin_view.get_input("Please enter your new password again")
             pass2 = self.admin_view.current_input
+
             if pass1 == pass2:
+
                 self.admins.username = self.admin_view.username
                 pswd = str(bcrypt.hashpw(pass1.encode("UTF-8"), bcrypt.gensalt(rounds=12)))
                 self.admins.password = pswd[2:len(pswd) - 1]
                 self.admins.update_password()
                 return
+
             self.admin_view.print_msg("Password didn't match, please try again")
             return False
 
@@ -114,6 +136,7 @@ class AdminController:
         bans_total = self.users_controller.ar_bans.total().Count
         reviews_total = self.users_controller.ar_rating.total().Count
         games_total = self.game_controller.game_model.total().Count
+
         self.admin_view.print_server_statistics(users_total, bans_total, reviews_total, games_total)
 
     def end_program(self) -> bool:

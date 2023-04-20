@@ -40,6 +40,7 @@ class UsersController:
                 num += 1
                 print(str(num) + ". " + header)
             self.admin_view.print_barrier()
+
             try:
                 self.admin_view.get_input("Choose which action you want to run")
                 user_input = int(self.admin_view.current_input)
@@ -48,10 +49,12 @@ class UsersController:
             except:
                 print("Invalid action, please try again")
                 user_input = None
+
             try:
                 res = self.commands[user_input - 1][1]()
                 if res is False:
                     return False
+
             except:
                 self.admin_view.print_msg("Invalid action, please try again")
 
@@ -67,8 +70,10 @@ class UsersController:
                 self.admin_view.get_input("Please insert a reason for ban")
                 reason = self.admin_view.current_input
                 self.admin_view.pretty_print_ban_reason(user.username, user.email, reason)
+
                 try:
                     confirmation = self.admin_view.confirmation()
+
                     if confirmation == "1":
                         self.ar_admins.username = str(self.admin_controller.username)
                         admin_id = self.ar_admins.find_id_by_username()
@@ -80,13 +85,17 @@ class UsersController:
                         self.ar_bans.reason = reason
                         self.ar_bans.save()
                         self.admin_view.print_msg("User has been successfully banned")
+
                         banning = False
                     elif confirmation == "2":
                         pass
+
                     else:
                         banning = False
+
                 except:
                     self.admin_view.print_msg("There was an error banning user")
+
             except:
                 self.admin_view.print_msg("Error choosing user")
 
@@ -101,18 +110,24 @@ class UsersController:
                 report = reports[int(self.admin_view.current_input) - 1]
                 self.admin_view.pretty_print_report(report.Reporter, report.Reported, report.reason)
                 self.admin_view.print_msg("Do you really want to check this report?")
+
                 try:
                     confirmation = self.admin_view.confirmation()
+
                     if confirmation == "1":
                         self.ar_reports.confirm_report(report.id)
                         self.admin_view.print_msg("Report was successfully approved")
                         reporting = False
+
                     elif confirmation == "2":
                         pass
+
                     else:
                         reporting = False
+
                 except:
                     self.admin_view.print_msg("There was a error with checking the report")
+
             except:
                 self.admin_view.print_msg("Error choosing report")
 
@@ -123,6 +138,7 @@ class UsersController:
         self.admin_view.get_input("Please select a user to check reviews of")
         user = users[int(self.admin_view.current_input) - 1]
         reviews = self.ar_rating.find_by_user_id(user.id)
+
         self.admin_view.print_game_reviews_for_user(user.username, reviews)
 
     def return_to_main_menu(self):

@@ -33,17 +33,21 @@ class GuiController:
         self.ar_bans = ActiveRecordBans()
 
     def move_to_user_menu(self, user_login, username: str, email: str, password: str) -> bool:
+
         if self.user_controller.login(username, email, password):
             rating_count = self.ar_ratings.find_by_user_username(username).Count
             mean_score = self.ar_ratings.get_mean_score(username).Count
             reports_given = self.ar_reports.reports_by_username(username).Count
             ban = self.ar_bans.find_if_banned(username)
+
             if ban is not None:
                 alert_window("You have been banned for: " + ban.reason)
                 return False
+
             user_login.destroy()
             user_menu = UserMenuView(self, username, email, password, rating_count, mean_score, reports_given)
             return True
+
         alert_window("Login failed, please try again")
         return False
 
@@ -74,10 +78,12 @@ class GuiController:
         app = UserProfileView(self, searched_user, rating_count, mean_score, reports_given, username, email, password)
 
     def register_user(self, current_window, username: str, email: str, password: str, password_check: str) -> bool:
+
         result = self.user_controller.register(username, email, password, password_check)
         if result != True:
             alert_window(result)
             return False
+
         alert_window("Registration successful")
         self.return_to_login(current_window)
         return True
@@ -86,6 +92,7 @@ class GuiController:
         if self.user_controller.password_change(username, email, current_password, pass1, pass2):
             self.return_to_login(current_window, True)
             return True
+
         alert_window("Password change was not successful, please try again!")
 
     def open_search_window(self, current_window, username: str, email, password: str, option: str):
@@ -109,16 +116,20 @@ class GuiController:
             rating = float(rating)
             if rating < 1 or rating > 10:
                 raise ValueError
+
         except ValueError:
             alert_window("Error: rating must be a number between 1 and 10")
             return False
+
         else:
             if not game_to_review:
                 alert_window("Error: game title cannot be empty")
                 return False
+
             elif not review:
                 alert_window("Warning: review is empty")
                 return False
+
         try:
             user_id = self.ar_users.find(username, email).id
             game_id = self.ar_games.find_by_title(game_to_review).id
@@ -129,6 +140,7 @@ class GuiController:
             self.ar_ratings.save()
             alert_window("Review was successfully added")
             return True
+
         except:
             alert_window("This game does not exist")
             return False

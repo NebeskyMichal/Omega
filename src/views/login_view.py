@@ -38,7 +38,7 @@ class LoginView:
             39.0,
             35.0,
             anchor="nw",
-            text="Welcome to GBDL",
+            text="Welcome to GBLD",
             fill="#FFFFFF",
             font=("Inter", 32 * -1)
         )

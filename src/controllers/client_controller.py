@@ -20,10 +20,13 @@ class ClientController:
         """
         try:
             hashed_passwd = self.users.find(username, email).password
+
         except AttributeError:
             return False
+
         if bcrypt.checkpw(password.encode("UTF-8"), hashed_passwd.encode("UTF-8")):
             return True
+
         else:
             return False
 
@@ -42,15 +45,19 @@ class ClientController:
         db_hashed_password = self.users.find(username, email).password
         provided_password = current_password.encode("UTF-8")
         if bcrypt.checkpw(provided_password, db_hashed_password.encode("UTF-8")):
+
             if pass1 == pass2:
+
                 self.users.username = username
                 self.users.email = email
                 if not re.match(r'^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^\w\d\s:])([^\s]){8,}$', pass1):
                     return False
+
                 pswd = str(bcrypt.hashpw(pass1.encode("UTF-8"), bcrypt.gensalt(rounds=12)))
                 self.users.password = pswd[2:len(pswd) - 1]
                 self.users.update_password()
                 return True
+
         return False
 
     def register(self, username: str, email: str, password: str, password_check: str) -> str:
@@ -65,8 +72,10 @@ class ClientController:
         """
         if not username or not email or not password or not password_check:
             return "All fields are required"
+
         if not re.match(r'^\w{4,20}$', username):
             return "Username must be 4-20 characters long and contain only alphanumeric characters and underscores"
+
         if not re.match(r'^[\w\.-]+@[\w\.-]+(\.[\w]+)+$', email):
             return "Invalid email address"
 
