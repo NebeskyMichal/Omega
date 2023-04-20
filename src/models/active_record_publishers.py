@@ -47,5 +47,5 @@ class ActiveRecordPublishers:
         res = self.find()
         if res is None:
             self.save()
-            return True
+            return self.insert_if_not_found()
         return res.id
