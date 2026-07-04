@@ -1,5 +1,19 @@
 # Projekt Omega
-Tento soubor je určen jako návod ke spuštění programu
+Omega je klientská aplikace vyvinutá jako závěrečný projekt na SPŠE Ječná. Projekt slouží k evidenci, hodnocení a správě videoherních titulů v rámci komunity uživatelů.
+
+## O projektu
+Cílem projektu bylo vytvořit komplexní systém využívající architekturu **Model-View-Controller (MVC)**, který umožňuje uživatelům vytvářet profily, hodnotit hry a sdílet názory, zatímco administrátoři mají k dispozici konzolové rozhraní pro správu uživatelů a databázových záznamů.
+
+## Použité technologie a vzory
+* **Jazyk:** Python 3.9+
+* **Databáze:** MS SQL Server
+* **Knihovny:** `pyodbc` (pro komunikaci s DB), `configparser` (konfigurace), `bcrypt` (bezpečné hashování hesel)
+* **Návrhové vzory:** * **Singleton:** Pro efektivní správu připojení k databázovému serveru.
+    * **Active Record:** Pro objektovou implementaci a snadnou manipulaci s databázovými tabulkami.
+    * **Command Pattern:** Pro efektivní volání funkcí a zpracování uživatelských vstupů.
+
+## Databázová struktura
+Aplikace pracuje s relační databází obsahující tabulky pro uživatele, hry, vydavatele, hodnocení, bany a nahlášení. Integrován je i databázový trigger `update_game_rating` pro automatický přepočet globálního hodnocení her.
 
 ## Instalace
 
